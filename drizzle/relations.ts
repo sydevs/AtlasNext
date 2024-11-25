@@ -8,6 +8,10 @@ export const countriesRelations = relations(countries, ({ many }) => ({
 }));
 
 export const regionsRelations = relations(regions, ({ one, many }) => ({
+  country: one(countries, {
+    fields: [regions.countryCode],
+    references: [countries.countryCode],
+  }),
   areas: many(areaVenues),
 }));
 

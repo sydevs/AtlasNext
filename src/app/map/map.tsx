@@ -4,13 +4,18 @@ import * as React from 'react';
 import Map, { GeolocateControl } from 'react-map-gl';
 import { env } from "@/env";
 
-export default function AtlasMap() {
-  const [viewState, setViewState] = React.useState({
-    longitude: -100,
-    latitude: 40,
-    zoom: 3.5
-  });
+interface ViewState {
+  longitude: number;
+  latitude: number;
+  zoom: number;
+}
 
+export interface AtlasMapProps {
+  viewState: ViewState;
+  setViewState: React.Dispatch<React.SetStateAction<ViewState>>;
+}
+
+export default function AtlasMap({ viewState, setViewState }: AtlasMapProps) {
   return <div className='w-dvw h-dvh fixed'>
     <Map
       mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_ACCESSTOKEN}
