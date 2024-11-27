@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import AtlasMap from './map';
+import CountryList from '@/components/lists/country';
 
 export default function MapPage() {
   const [viewState, setViewState] = React.useState({
@@ -14,7 +15,7 @@ export default function MapPage() {
     <AtlasMap viewState={viewState} setViewState={setViewState} />
     <div className="h-dvh max-w-md lg:p-10 lg:drop-shadow-lg">
       <div className="bg-white w-full h-full">
-
+        <CountryList />
       </div>
     </div>
   </div>;
