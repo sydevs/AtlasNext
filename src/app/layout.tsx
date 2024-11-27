@@ -1,13 +1,7 @@
-import "@/styles/globals.css";
+import "~/styles/globals.css";
 
-//import GeistSans from "geist/font/sans";
-import { Raleway } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
-
-import { StrictMode } from "react";
-import { TRPCReactProvider } from "@/trpc/react";
-
-const raleway = Raleway({ subsets: ["latin", "cyrillic", "vietnamese"] })
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -19,12 +13,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${raleway.className}`}>
-      <body>
-        <StrictMode>
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-        </StrictMode>
-      </body>
+    <html lang="en" className={`${GeistSans.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }

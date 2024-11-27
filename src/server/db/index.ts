@@ -1,15 +1,18 @@
-import { PrismaClient } from '@prisma/client'
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 
-const prismaClientSingleton = () => {
-  return new PrismaClient()
-}
+import { env } from "~/env";
+import * as schema from "./schema";
 
-declare const globalThis: {
-  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
-} & typeof global;
+/**
+ * Cache the database connection in development. This avoids creating a new connection on every HMR
+ * update.
+ */
+const globalForDb = globalThis as unknown as {
+  conn: postgres.Sql | undefined;
+};
 
-const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
+const conn = globalForDb.conn ?? postgres(env.DATABASE_URL);
+if (env.NODE_ENV !== "production") globalForDb.conn = conn;
 
-export default prisma
-
-if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma
+export const db = drizzle(conn, { schema });
